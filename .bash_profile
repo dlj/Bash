@@ -92,6 +92,12 @@ function reset {
 function ch {
   local doCleanup=true  
 
+   if [[ `TASKLIST //FI "STATUS eq running" //FI "IMAGENAME eq devenv.exe" //NH` != "INFO: No tasks are running which match the specified criteria." ]] ;
+   then
+           echo "Please remember to exit Visual Studio before switching branches." ;
+           return 2 ;
+   fi ;
+
    git checkout $1
    if [ $? != 0 ]
    then
