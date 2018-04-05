@@ -94,8 +94,11 @@ function ch {
 
    if [[ `TASKLIST //FI "STATUS eq running" //FI "IMAGENAME eq devenv.exe" //NH` != "INFO: No tasks are running which match the specified criteria." ]] ;
    then
-           echo "Please remember to exit Visual Studio before switching branches." ;
-           return 2 ;
+	   echo "Visual Studio is running. Are you sure you want to continue [Y/N]?" ;
+	   read confirm ;
+	   if [[ $confirm != y* && $confirm != Y* ]] ;
+	   then return 2 ;
+	   fi ;
    fi ;
 
    git checkout $1
