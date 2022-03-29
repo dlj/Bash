@@ -2,7 +2,7 @@
 #-------------------------------------------------------------
 # Version
 #-------------------------------------------------------------
-version=24
+version=25
 
 #-------------------------------------------------------------
 # Default settings. Saved after an update
@@ -24,7 +24,6 @@ alias log="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset 
 #-------------------------------------------------------------
 # Variables
 #-------------------------------------------------------------
-workFolders=( "WorkBook.UI" "WorkBook.Client" "WorkBook.Server" )
 tmpnewfile=~/.bashrctmp
 declare -a cherryPickCommits
 declare lastCherryPickBranch
@@ -51,15 +50,27 @@ function sup {
 }
  
 function cleantemp {
-  for i in "${workFolders[@]}"
-  do
-    if [ -d $i"/bin" ]; then
-     rm -rf $i"/bin"
+  OIFS="$IFS"
+  #only split find results on newline, not spaces
+  IFS=$'\n'
+  #find root directory for current git repository
+  gitrootdir=$(git rev-parse --show-toplevel)
+  if [ -z $gitrootdir ]
+  then
+    echo Unable to find root directory of current git repository
+    exit 1
   fi
-      if [ -d $i"/obj" ]; then
-     rm -rf $i"/obj"
-  fi  
+  #iterate and remove all obj directories
+  for dir in $(find $gitrootdir -type d -name "obj")
+  do
+    rm -rf "$dir"
   done
+  #iterate and remove all bin directories
+  for dir in $(find $gitrootdir -type d -name "bin")
+  do
+    rm -rf "$dir"
+  done
+  IFS="$OIFS"
 }
  
 function cleanbranches {
