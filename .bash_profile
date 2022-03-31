@@ -2,7 +2,7 @@
 #-------------------------------------------------------------
 # Version
 #-------------------------------------------------------------
-version=25
+version=26
 
 #-------------------------------------------------------------
 # Default settings. Saved after an update
@@ -118,8 +118,9 @@ function ch {
   
   if [ $doCleanup == true ]
   then
-  echo "Doing Cleanupz"
-   cleantemp
+    echo "Doing Cleanupz"
+    cleantemp
+    echo "Cleanupz Done"
   fi
 }
   
