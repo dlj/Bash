@@ -2,7 +2,7 @@
 #-------------------------------------------------------------
 # Version
 #-------------------------------------------------------------
-version=25
+version=27
 
 #-------------------------------------------------------------
 # Default settings. Saved after an update
@@ -61,12 +61,12 @@ function cleantemp {
     exit 1
   fi
   #iterate and remove all obj directories
-  for dir in $(find $gitrootdir -type d -name "obj")
+  for dir in $(find $gitrootdir -type d -name "obj" -not -path '*/node_modules/*')
   do
     rm -rf "$dir"
   done
   #iterate and remove all bin directories
-  for dir in $(find $gitrootdir -type d -name "bin")
+  for dir in $(find $gitrootdir -type d -name "bin" -not -path '*/node_modules/*')
   do
     rm -rf "$dir"
   done
