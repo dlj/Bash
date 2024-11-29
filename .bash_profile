@@ -2,7 +2,7 @@
 #-------------------------------------------------------------
 # Version
 #-------------------------------------------------------------
-version=27
+version=28
 
 #-------------------------------------------------------------
 # Default settings. Saved after an update
@@ -101,7 +101,7 @@ function reset {
 } 
  
 function ch {
-  local doCleanup=true  
+  local doCleanup=false  
 
    git checkout $1
    if [ $? != 0 ]
@@ -111,9 +111,9 @@ function ch {
    fi      
 
   sup
-  if [ "$2" == "--nc" ]
+  if [ "$2" == "-c" ]
     then
-    doCleanup=false
+    doCleanup=true
   fi
   
   if [ $doCleanup == true ]
@@ -490,6 +490,7 @@ function fixGitPrompt () {
 function commands {
   echo "The following commands are available"
   echo "------------------------------------"
+  echo "ch : Switch branch and update submodules. Add -c to delete bin and objfolders. ch {branch} [-c]"
   echo "cleanbranches : Cleans up all merged branches from your local Git"
   echo "cleantemp : Cleans bin and obj folders"
   echo "cpm : Cherry pick. cpm {from} {option}. e.g cpm 8.3.1 l"
